@@ -74,7 +74,8 @@ public class RecursiveSearch {
 			RecursiveSearch rs = new RecursiveSearch();
 			
 			//adds word to string list to be returned
-			currentWord.concat(str); //TODO add method for pulling word from puzzle given coords
+			int[] coords = {c,r};
+			currentWord.concat(puzzle.getLetter(coords)); //TODO add method for pulling word from puzzle given coords
 			manager mana = new manager();
 			boolean isValid = mana.validWord(currentWord);
 			if(isValid == true && rs.isInWordList(currentWord, strLst) == true){
