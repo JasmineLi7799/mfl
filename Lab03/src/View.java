@@ -130,7 +130,7 @@ public class View {
 		JButton inputPrompt = new JButton("Click Here to Enter Letters.");
 		inputPrompt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<String> letters = askForLetters();
+				String[][] letters = askForLetters();
 				puzzle = new Puzzle(sideLength, targetLength, letters);
 				configurePuzzle();
 				//CALL THE SEARCHING ALGORITHM HERE
@@ -177,8 +177,10 @@ public class View {
 	 * dialogue pop-ups that allow the user to input a set number of characters.
 	 * There were issues with making text fields work with limitations, so this works instead.
 	 */
-	public ArrayList<String> askForLetters() {
-		ArrayList<String> letters = new ArrayList<String>();
+	public String[][] askForLetters() {
+		String[][] letters = new String[sideLength][sideLength];
+		int row = 0;
+		int col = 0;
 		boolean validity = true; //we will check the validity of the input as we go
 		
 		//same # of dialog boxes as there are boxes in the puzzle
@@ -209,9 +211,27 @@ public class View {
 					} else {
 						//append to matrix if valid
 						validity = true;
-						letters.add(s);
+						letters[row][col] = s;
+						if(row==sideLength-1) {
+							row = 0;
+						} else {
+							row++;
+						}
+						
+						if(col==sideLength-1) {
+							col = 0;
+						} else {
+							col++;
+						}
 					}
 				}
+			}
+		}
+		
+		System.out.println("List:");
+		for(int i=0; i<letters.length; i++) {
+			for(int j=0; j<letters[i].length; j++) {
+				System.out.println(letters[i][j]);
 			}
 		}
 		
@@ -238,14 +258,11 @@ public class View {
 		puzzlePanel.setLayout(new GridLayout(puzzle.side, puzzle.side, 0, 0));
 		
 		//panel for the puzzle display
-		int current = 0;
 		for(int row=0; row<puzzle.side; row++) {
 			for(int col=0; col<puzzle.side; col++) {
-				JButton box = new JButton(puzzle.letters.get(current));
+				JButton box = new JButton(puzzle.letters[row][col]);
 				box.setEnabled(false);
-				
 				puzzlePanel.add(box);
-				current++;
 			}
 		}
 		

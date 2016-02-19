@@ -16,9 +16,9 @@ import java.util.ArrayList;
 public class Puzzle { //could be edited to extend ArrayList and make it more versatile if needed 
 	int side;
 	int targetLength; 
-	ArrayList<String> letters;
+	String[][] letters;
 	
-	public Puzzle(int x, int y, ArrayList<String> input) {
+	public Puzzle(int x, int y, String[][] input) {
 		side = x;
 		targetLength = y;
 		letters = input;
