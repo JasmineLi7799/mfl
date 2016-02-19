@@ -14,13 +14,11 @@ import java.util.ArrayList;
  *
  */
 public class Puzzle { //could be edited to extend ArrayList and make it more versatile if needed 
-	main frame;
 	int side;
 	int targetLength; 
 	ArrayList<String> letters;
 	
-	public Puzzle(main fr, int x, int y, ArrayList<String> input) {
-		frame = fr;
+	public Puzzle(int x, int y, ArrayList<String> input) {
 		side = x;
 		targetLength = y;
 		letters = input;
