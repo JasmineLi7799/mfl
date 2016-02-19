@@ -2,13 +2,17 @@ import java.util.ArrayList;
 
 public class RecursiveSearch {
 
-	public ArrayList<String> RecursiveSearch(int m, int r, int c,int[][] usedSet, Puzzle puzzle){
+	public RecursiveSearch(){
+		;
+	}
+	
+	public ArrayList<String> search(int m, int r, int c, ArrayList<int[]> usedSet, Puzzle puzzle, String currentWord){
 		
 		//will check if r,c coordinates have been used
 		boolean contains;
 		int counter = 0;
-		while(counter < usedSet.length){
-			if(c == usedSet[counter][0] && r == usedSet[counter][1]){
+		while(counter < usedSet.size()){
+			if(c == usedSet.get(counter)[0] && r == usedSet.get(counter)[1]){
 				contains = true;
 			}
 			else{
@@ -16,6 +20,11 @@ public class RecursiveSearch {
 			}
 		}
 		
+		//adds current coordinates to the usedSet list
+		int[] coordinates = {r,c};
+		usedSet.add(coordinates);
+		
+		//For adding words to and returning
 		ArrayList<String> strLst = new ArrayList<String>();
 		
 		//for error checking, failure results in empty list being returned
@@ -29,15 +38,25 @@ public class RecursiveSearch {
 		}
 		
 		//recursion of method
-		RecursiveSearch rsL = new RecursiveSearch(m, r, c -1, usedSet, puzzle);
-		RecursiveSearch rsR = new RecursiveSearch(m, r, c +1, usedSet, puzzle);
-		RecursiveSearch rsU = new RecursiveSearch(m, r -1, c, usedSet, puzzle);
-		RecursiveSearch rsD = new RecursiveSearch(m, r +1, c, usedSet, puzzle);
-		RecursiveSearch rsUL = new RecursiveSearch(m, r -1, c -1, usedSet, puzzle);
-		RecursiveSearch rsDR = new RecursiveSearch(m, r +1, c +1, usedSet, puzzle);
-		RecursiveSearch rsDL = new RecursiveSearch(m, r +1, c -1, usedSet, puzzle);
-		RecursiveSearch rsUR = new RecursiveSearch(m, r -1, c +1, usedSet, puzzle);
-		
+		if(currentWord.length() <= m){
+			
+			//will merge two String Array Lists
+			StringArrayListMerger merger = new StringArrayListMerger(strLst);
+			
+			RecursiveSearch rs = new RecursiveSearch();
+			
+			merger.merge(rs.search(m, r, c, usedSet, puzzle));
+			merger.merge(rs.search(m, r, c +1, usedSet, puzzle));
+			merger.merge(rs.search(m, r -1, c, usedSet, puzzle));
+			merger.merge(rs.search(m, r +1, c, usedSet, puzzle));
+			merger.merge(rs.search(m, r -1, c -1, usedSet, puzzle));
+			merger.merge(rs.search(m, r +1, c +1, usedSet, puzzle));
+			merger.merge(rs.search(m, r +1, c -1, usedSet, puzzle));
+			merger.merge(rs.search(m, r -1, c +1, usedSet, puzzle));
+		}
+		else{
+			return strLst;
+		}
 		//add elements from Recursive Search to Array List
 		
 	}
