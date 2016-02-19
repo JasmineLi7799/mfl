@@ -46,18 +46,5 @@ public class main {
 		//initialize the frame
 		frame = new View();
 		
-		/* THIS WILL BE DELETED LATER !!
-		//ask input
-		System.out.println(" Please type in a word. ");
-		Scanner reader = new Scanner(System.in);  
-		String input = reader.nextLine();
-		while(!mana.validWord(input)){
-			System.out.println(" Please type in a valid word. ");
-			input = reader.nextLine();
-		}
-		
-		//check if the word exists in the cache dictionary
-		mana.inCache(input);*/
-		
 	}
 }

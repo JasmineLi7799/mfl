@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxModel;
@@ -18,30 +19,27 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 /**
  * This is the GUI for the program. It still needs to be cleaned up a bit.
- * 
- * TO DO:
- * -Import Graphics to make the puzzle a real grid, not buttons. 
- * -Add in the reference to call the searching algorithm.
- * -Fill in the text area with the valid results (probably by the append function). Make sure
- * that text area actually scrolls and such once it's full of words.
  * 
  * @author meganmayfield
  *
  */
 
 public class View {
-	JFrame frame;
-	Puzzle puzzle;
 	int maxSize; //will be used to know how many letters to ask the user for
 	int sideLength; //likewise
 	int targetLength; //will be used to know how long the words will be
+	JFrame frame;
+	Puzzle puzzle;
+	JPanel puzzlePanel;
 	JComboBox sizeOptions;
 	JComboBox lengthOptions;
 	ComboBoxModel[] models; //used to make a combo box change dynamically
 	String[] sizes; //necessary to keep track of possibilities
+	RecursiveSearch search;
 	
 	public View() {
 		frame = new JFrame();
@@ -235,7 +233,7 @@ public class View {
 		JPanel bottomPanel = new JPanel();
 		JPanel labelPanel = new JPanel();
 		JPanel displayPanel = new JPanel();
-		JPanel puzzlePanel = new JPanel();
+		puzzlePanel = new JPanel();
 		
 		//set up the main and sub panels with their layouts
 		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
@@ -243,14 +241,7 @@ public class View {
 		displayPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		puzzlePanel.setLayout(new GridLayout(puzzle.side, puzzle.side, 0, 0));
 		
-		//panel for the puzzle display
-		for(int row=0; row<puzzle.side; row++) {
-			for(int col=0; col<puzzle.side; col++) {
-				JButton box = new JButton(puzzle.letters[row][col]);
-				box.setEnabled(false);
-				puzzlePanel.add(box);
-			}
-		}
+		renderBoard();
 		
 		//label for the results
 		JLabel resultsLabel = new JLabel("Discovered Words: ");
@@ -266,6 +257,18 @@ public class View {
 		JScrollPane scrolling = new JScrollPane(results);
 		scrolling.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
+		//fill in with results
+		search = new RecursiveSearch();
+		ArrayList<String> words = search.search(targetLength, 0, 0, new ArrayList<int[]>(), puzzle);
+		
+		if(words.isEmpty()) {
+			results.setText("No valid words found.");
+		} else {
+			for(int i=0; i<words.size(); i++) {
+				results.append(words.get(i));
+			}
+		}
+		
 		displayPanel.add(results);
 		
 		//add the subpanels into the bottom section of the gui 
@@ -277,6 +280,26 @@ public class View {
 		frame.setContentPane(bottomPanel);
 		frame.pack();
 		frame.validate();
+	}
+	
+	/**
+	 * Algorithm that renders the squares for the puzzle.
+	 */
+	public void renderBoard() {
+		for(int row=0; row<puzzle.side; row++) {
+			for(int col=0; col<puzzle.side; col++) {
+				JLabel box = new JLabel(puzzle.letters[row][col], SwingConstants.CENTER);
+				box.setPreferredSize(new Dimension(20,20));
+				if((row%2) == (col%2)) {
+					box.setOpaque(true);
+					box.setBackground(Color.WHITE);
+				} else {
+					box.setOpaque(true);
+					box.setBackground(Color.PINK);
+				}
+				puzzlePanel.add(box);
+			}
+		}
 	}
 
 }
