@@ -27,5 +27,14 @@ public class Puzzle { //could be edited to extend ArrayList and make it more ver
 	public int totalLength() {
 		return side*side;
 	}
+	
+	/**
+	 * finds letter in 2D string array and returns letter
+	 * @param coords
+	 * @return
+	 */
+	public String getLetter(int[] coords){
+		return letters[coords[1]][coords[0]];
+	}
 
 }

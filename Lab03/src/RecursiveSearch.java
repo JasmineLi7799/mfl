@@ -35,7 +35,7 @@ public class RecursiveSearch {
 	private ArrayList<String> search(int m, int r, int c, ArrayList<int[]> usedSet, Puzzle puzzle, String currentWord){
 		
 		//will check if r,c coordinates have been used
-		boolean contains;
+		boolean contains = false;
 		int counter = 0;
 		while(counter < usedSet.size()){
 			if(c == usedSet.get(counter)[0] && r == usedSet.get(counter)[1]){
@@ -59,11 +59,10 @@ public class RecursiveSearch {
 			return strLst;
 		}
 		
+		//code for adding single letter to list
 		if(m == 1){
-			//code for adding single letter to list
 			return strLst;
 		}
-		
 		
 		if(currentWord.length() <= m){
 			
@@ -75,14 +74,14 @@ public class RecursiveSearch {
 			
 			//adds word to string list to be returned
 			int[] coords = {c,r};
-			currentWord.concat(puzzle.getLetter(coords)); //TODO add method for pulling word from puzzle given coords
+			currentWord.concat(puzzle.getLetter(coords));
 			manager mana = new manager();
 			boolean isValid = mana.validWord(currentWord);
 			if(isValid == true && rs.isInWordList(currentWord, strLst) == true){
 				strLst.add(currentWord);
 			}
 			
-			
+			//performs recursion and merging of string lists
 			merger.merge(rs.search(m, r, c, usedSet, puzzle, currentWord));
 			merger.merge(rs.search(m, r, c +1, usedSet, puzzle, currentWord));
 			merger.merge(rs.search(m, r -1, c, usedSet, puzzle, currentWord));
@@ -95,6 +94,9 @@ public class RecursiveSearch {
 		else{
 			return strLst;
 		}
+		
+		//If all else fails
+		return strLst;
 		
 		
 	}
