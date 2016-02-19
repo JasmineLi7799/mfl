@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author meganmayfield
  *
  */
-public class Puzzle { //could be edited to extend ArrayList and make it more versatile if needed 
+public class Puzzle { 
 	int side;
 	int targetLength; 
 	String[][] letters;

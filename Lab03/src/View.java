@@ -212,26 +212,13 @@ public class View {
 						//append to matrix if valid
 						validity = true;
 						letters[row][col] = s;
-						if(row==sideLength-1) {
-							row = 0;
-						} else {
-							row++;
-						}
-						
 						if(col==sideLength-1) {
-							col = 0;
-						} else {
-							col++;
-						}
+							row++;
+							col = -1;
+						} 
+						col++;
 					}
 				}
-			}
-		}
-		
-		System.out.println("List:");
-		for(int i=0; i<letters.length; i++) {
-			for(int j=0; j<letters[i].length; j++) {
-				System.out.println(letters[i][j]);
 			}
 		}
 		
