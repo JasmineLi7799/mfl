@@ -76,13 +76,13 @@ public class RecursiveSearch {
 			int[] coords = {c,r};
 			currentWord.concat(puzzle.getLetter(coords));
 			manager mana = new manager();
-			boolean isValid = mana.validWord(currentWord);
+			boolean isValid = mana.inCache(currentWord);
 			if(isValid == true && rs.isInWordList(currentWord, strLst) == true){
 				strLst.add(currentWord);
 			}
 			
 			//performs recursion and merging of string lists
-			merger.merge(rs.search(m, r, c, usedSet, puzzle, currentWord));
+			//merger.merge(rs.search(m, r, c, usedSet, puzzle, currentWord));
 			merger.merge(rs.search(m, r, c +1, usedSet, puzzle, currentWord));
 			merger.merge(rs.search(m, r -1, c, usedSet, puzzle, currentWord));
 			merger.merge(rs.search(m, r +1, c, usedSet, puzzle, currentWord));

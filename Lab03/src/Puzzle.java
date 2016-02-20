@@ -33,7 +33,7 @@ public class Puzzle {
 	 * @return
 	 */
 	public String getLetter(int[] coords){
-		return letters[coords[1]][coords[0]];
+		return letters[coords[0]][coords[1]];
 	}
 
 }
