@@ -34,12 +34,16 @@ public class RecursiveSearch {
 	 */
 	private ArrayList<String> search(int m, int r, int c, ArrayList<int[]> usedSet, Puzzle puzzle, String currentWord){
 		
+		//for testing purposes
+		System.out.println(r + ", " + c);
+		
 		//will check if r,c coordinates have been used
 		boolean contains = false;
 		int counter = 0;
 		while(counter < usedSet.size()){
 			if(c == usedSet.get(counter)[0] && r == usedSet.get(counter)[1]){
 				contains = true;
+				System.out.println("o");
 			}
 			else{
 				contains = false;
@@ -55,7 +59,8 @@ public class RecursiveSearch {
 		ArrayList<String> strLst = new ArrayList<String>();
 		
 		//for error checking, failure results in empty list being returned
-		if(m <= 0 || r<0 || r > puzzle.side || c<0 || c > puzzle.side || contains == true){
+		if(m <= 0 || r<0 || r > puzzle.side - 1 || c<0 || c > puzzle.side - 1 || contains == true){
+			System.out.println("x");
 			return strLst;
 		}
 		
@@ -74,7 +79,12 @@ public class RecursiveSearch {
 			
 			//adds word to string list to be returned
 			int[] coords = {c,r};
-			currentWord.concat(puzzle.getLetter(coords));
+			
+			String currentLetter = puzzle.getLetter(coords);
+			String tempWord = currentWord + currentLetter;
+			currentWord = tempWord;
+			System.out.println("current word is: " + currentWord);
+			
 			manager mana = new manager();
 			boolean isValid = mana.inCache(currentWord);
 			if(isValid == true && rs.isInWordList(currentWord, strLst) == true){
