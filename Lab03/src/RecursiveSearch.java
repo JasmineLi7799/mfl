@@ -87,7 +87,8 @@ public class RecursiveSearch {
 			
 			manager mana = new manager();
 			boolean isValid = mana.inCache(currentWord);
-			if(isValid == true && rs.isInWordList(currentWord, strLst) == true){
+			if(isValid == true && rs.isInWordList(currentWord, strLst) == false){
+				System.out.println("adding to dictionary");
 				strLst.add(currentWord);
 			}
 			
@@ -122,10 +123,10 @@ public class RecursiveSearch {
 		int counter = 0;
 		while(counter < strLst.size()){
 			if(strLst.get(counter).compareTo(word) == 0){
-				return false;
+				return true;
 			}
 			counter ++;
 		}
-		return true;
+		return false;
 	}
 }
