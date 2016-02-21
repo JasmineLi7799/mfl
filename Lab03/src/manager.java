@@ -130,7 +130,7 @@ public class manager {
 	 * if the cache is not exist, return false and then create the cache file and update data from source file
 	 */
 	public boolean cacheExist(){
-		File f = new File("/Users/Jasmine/Documents/Eclipse/CacheDictionary/cache.txt");
+		File f = new File("./cache.txt");
 		if(f.exists() && !f.isDirectory()){
 			//if the cache is exist
 			return true;

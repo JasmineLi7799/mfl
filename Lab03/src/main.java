@@ -47,4 +47,5 @@ public class main {
 		frame = new View();
 		
 	}
+	
 }
