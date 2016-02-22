@@ -1,5 +1,11 @@
 import java.util.ArrayList;
 
+/**
+ * Searches a puzzle object for words also in a cache file
+ * 
+ * @author Jackson
+ *
+ */
 public class RecursiveSearch {
 
 	/**
@@ -43,7 +49,6 @@ public class RecursiveSearch {
 		while(counter < usedSet.size()){
 			if(c == usedSet.get(counter)[0] && r == usedSet.get(counter)[1]){
 				contains = true;
-				System.out.println("o");
 			}
 			else{
 				contains = false;
@@ -60,7 +65,6 @@ public class RecursiveSearch {
 		
 		//for error checking, failure results in empty list being returned
 		if(m <= 0 || r<0 || r > puzzle.side - 1 || c<0 || c > puzzle.side - 1 || contains == true){
-			System.out.println("x");
 			return strLst;
 		}
 		
@@ -86,6 +90,7 @@ public class RecursiveSearch {
 			System.out.println("current word is: " + currentWord);
 			
 			manager mana = new manager();
+			
 			boolean isValid = mana.inCache(currentWord);
 			if(isValid == true && rs.isInWordList(currentWord, strLst) == false){
 				System.out.println("adding to dictionary");
