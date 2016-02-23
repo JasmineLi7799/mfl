@@ -64,8 +64,24 @@ public class managerTest {
 		@Test
 	public void testCacheExist(){
 		manager mana = new manager ();
-		assertEquals(false ,mana.cacheExist());		
+		//it will be false if we haven't start the game 
+		//after we play the game once, there will be a cache file 
+		assertEquals(true ,mana.cacheExist());		
 	}
+		
+		@Test
+	public void inCache(){
+			manager mana = new manager();
+			mana.cache();
+			
+			assertEquals(true, mana.inCache("aa"));
+			assertEquals(true, mana.inCache("aaa"));
+			assertTrue(mana.inCache("hi"));
+			
+			assertEquals(false, mana.inCache("a"));
+			assertFalse(mana.inCache("a-a"));
+			assertFalse(mana.inCache("1 2 3"));
+		}
 
 	
 

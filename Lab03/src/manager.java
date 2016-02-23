@@ -42,6 +42,7 @@ public class manager {
 		fileList = folder.listFiles();
 		source = new HashMap();
 		writeList = new ArrayList<String>();
+		System.out.println("create manager ........");
 		
 	}
 
@@ -59,7 +60,7 @@ public class manager {
 		 * if no, then create a cache file 
 		*/
 		if(cacheExist()){
-			//check date and decide with file to update
+			//check date and decide which file to update
 			System.out.println(" hahahaha, cache already there! ");
 			
 			File cache = new File("./cache.txt");
@@ -91,7 +92,9 @@ public class manager {
 			    System.err.println("IOException: " + ioe.getMessage());
 			}
 				
-		}else{
+		}
+		//there are is no cache, need to create a cache file
+		else{
 			System.out.println(" create new cache file !");
 			//create cache file and copy sort the data from source file
 			//1. read all the source file and store the data to an arrayList
@@ -163,7 +166,7 @@ public class manager {
 			String sCurrentLine;
 			
 			// "Users/Jasmine/Documents/Eclipse/CacheDictionary/src/english.txt"
-			br = new BufferedReader(new FileReader(filePath));
+			br = new BufferedReader(new FileReader(filePath)); 
 			
 			//str.matches(".*\\d+.*"); ==> string that contains numbers
 			//.matches("[a-zA-Z]+"); ==> string that only contains letter
@@ -249,11 +252,13 @@ public class manager {
 	 * check if the word is in the cache or not
 	 */
 	public boolean inCache(String word){
+	//	System.out.println("checking word is:  "+"-"+word+"-");
+	//	System.out.println(source.containsValue(word));
 		if(source.get(word) != null){
-			System.out.println("This word is in the cache dictionary ");
+	//		System.out.println("This word is in the cache dictionary ");
 			return true;
 		}
-		System.out.println("this word is not in the cache dictionary ");
+	//	System.out.println("this word is not in the cache dictionary ");
 		return false;
 	}
 

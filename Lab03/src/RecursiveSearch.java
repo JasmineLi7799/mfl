@@ -1,12 +1,22 @@
+/**
+ * in order to save the time of checking if the word is the cache, this recursive search method will gather all the possible string first
+ * and then go over the list of possible string to check if the string is in the cache file
+ * this will save time because each time check the work, manager method will check if need to update the cache first, it will cost a lot of time
+ * and easy run out heap memory
+ * 
+ * --Jasmine
+ */
+
+
 import java.util.ArrayList;
 
 public class RecursiveSearch {
-
+	public ArrayList<String>strLst ;
 	/**
 	 * Do nothing constructor
 	 */
 	public RecursiveSearch(){
-		;
+		strLst = new ArrayList<String>();
 	}
 	
 	/**
@@ -56,7 +66,7 @@ public class RecursiveSearch {
 		usedSet.add(coordinates);
 		
 		//For adding words to and returning
-		ArrayList<String> strLst = new ArrayList<String>();
+		
 		
 		//for error checking, failure results in empty list being returned
 		if(m <= 0 || r<0 || r > puzzle.side - 1 || c<0 || c > puzzle.side - 1 || contains == true){
@@ -85,12 +95,8 @@ public class RecursiveSearch {
 			currentWord = tempWord;
 			System.out.println("current word is: " + currentWord);
 			
-			manager mana = new manager();
-			boolean isValid = mana.inCache(currentWord);
-			if(isValid == true && rs.isInWordList(currentWord, strLst) == false){
-				System.out.println("adding to dictionary");
-				strLst.add(currentWord);
-			}
+			//add the word to the result string to return all possible combination
+			strLst.add(currentWord);
 			
 			//performs recursion and merging of string lists
 			//merger.merge(rs.search(m, r, c, usedSet, puzzle, currentWord));
@@ -107,26 +113,7 @@ public class RecursiveSearch {
 		}
 		
 		//If all else fails
-		return strLst;
+		return strLst;	
 		
-		
-	}
-	
-	/**
-	 * checks an ArrayList to see if a word is already present in it
-	 * @param word String to be checked for
-	 * @param strLst ArrayList to see if word is in
-	 * @return
-	 */
-	private boolean isInWordList(String word, ArrayList<String> strLst){
-		
-		int counter = 0;
-		while(counter < strLst.size()){
-			if(strLst.get(counter).compareTo(word) == 0){
-				return true;
-			}
-			counter ++;
-		}
-		return false;
 	}
 }

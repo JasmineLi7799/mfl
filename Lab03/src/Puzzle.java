@@ -17,6 +17,8 @@ public class Puzzle {
 	int targetLength; 
 	String[][] letters;
 	
+
+	
 	public Puzzle(int x, int y, String[][] input) {
 		side = x;
 		targetLength = y;

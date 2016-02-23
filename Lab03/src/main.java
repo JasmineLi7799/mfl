@@ -39,11 +39,9 @@ public class main {
 	static View frame;
 	
 	public static void main(String[] args) {
-		//first check update
-		manager mana = new manager();
-		mana.cache();
+
 		
-		//initialize the frame
+		//initialize the frame and start the game
 		frame = new View();
 		
 	}
