@@ -182,7 +182,7 @@ public class View {
 		
 		//same # of dialog boxes as there are boxes in the puzzle
 		for(int i=0; i<maxSize; i++) {
-			String s = "";
+			String s = null;
 			
 			if(validity) { //two dialog options depending on previous input
 				s = (String)JOptionPane.showInputDialog(frame, "Enter a single letter: ", i + "/" + maxSize, JOptionPane.PLAIN_MESSAGE, null, null, "");
@@ -258,20 +258,58 @@ public class View {
 		scrolling.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
 		//fill in with results
-		search = new RecursiveSearch();
-		ArrayList<String> words = search.search(targetLength, 0, 0, new ArrayList<int[]>(), puzzle);
 		
-		if(words.isEmpty()) {
+		search = new RecursiveSearch();
+		
+		/*
+		 * after get all the possible combination from search method, need to check if each string is cache file and
+		 * if it is our target length
+		 * and don't add the redundant word in the valid string list
+		 * --Jasmine
+		 */
+		ArrayList<String> words = search.search(targetLength, 0, 0, new ArrayList<int[]>(), puzzle);
+		manager mana = new manager();
+		mana.cache();
+		ArrayList<String> valid = new ArrayList<String>();
+		//if the possible string list is not empty, go check each string
+		if(!words.isEmpty()){
+			for(int i = 0; i < words.size(); i++){
+				//if this string is in the cache file and the length is our target length, add this string to valid list
+				if(mana.inCache(words.get(i)) && words.get(i).length() == targetLength){
+					if(valid.isEmpty()){
+						valid.add((words.get(i)));
+					}else{
+						boolean already = false;
+						for(int j = 0; j < valid.size(); j++){
+							if(words.get(i).equals(valid.get(j))){
+								already = true;
+							}
+						}
+						//if this valid word is not redundant in valid list, add it
+						if(already == false){
+							valid.add((words.get(i)));
+
+						}
+					}
+					
+				}
+			}
+		}
+		
+ 		
+		if(valid.isEmpty()) {
 			results.setText("No valid words found.");
 		} else {
-			for(int i=0; i<words.size(); i++) {
-				results.append(words.get(i));
+			System.out.println("the size of valid list is : "+valid.size());
+			for(int i=0; i<valid.size(); i++) {
+
+				results.append(valid.get(i)+" ");
 			}
 		}
 		
 		displayPanel.add(results);
 		
-		//add the subpanels into the bottom section of the gui 
+		//add the sub panels into the bottom section of the gui 
 		bottomPanel.add(puzzlePanel);
 		bottomPanel.add(labelPanel);
 		bottomPanel.add(displayPanel);
